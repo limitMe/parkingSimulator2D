@@ -1,4 +1,5 @@
 bgColor = '#a1a1a1';
+var absoluteMode = true;
 
 var obsList = [];
 function makeObs(x, y, w, h, alpha){
@@ -24,6 +25,7 @@ function obsCollision(){
     });
 }
 
+makeObs(0, 0, 600, 1, 0);
 makeObs(200, 200, 32, 80, 0);
 makeObs(300, 200, 32, 80, 0);
 target = new rect(240, 190, 52, 100, 0);
@@ -50,7 +52,7 @@ fps = 1000 / interval;
 
 var myCar = new car();
 var ctx = document.getElementById('canv').getContext('2d');
-myCar.setPos(100, 100, Math.PI * 3 / 2, 0);
+myCar.setPos(265, 240, Math.PI, 0);
 myCar.draw();
 
 window.addEventListener('keydown', 
@@ -352,8 +354,10 @@ function update(){
     myCar.move();
     ctx.save();
     ctx.translate(window.innerWidth / 2, window.innerHeight / 2);
-    ctx.rotate(-myCar.theta + Math.PI);
-    ctx.translate(-myCar.x, -myCar.y);
+    if (!absoluteMode) {
+        ctx.rotate(-myCar.theta + Math.PI);
+        ctx.translate(-myCar.x, -myCar.y);
+    }
     inTarget();
     target.stroke(ctx);
     obsCollision();
